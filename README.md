@@ -74,11 +74,8 @@ services:
   portal:
     image: crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-portal:latest
     container_name: seclabx-portal
-    build:
-      context: .
-      dockerfile: Dockerfile
     ports:
-      - "8080:80"   
+      - "8080:80"
     restart: always
 ```
 
