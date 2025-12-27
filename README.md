@@ -60,10 +60,31 @@ npm run build
 
 如果你更喜欢容器化部署，可以直接使用 Docker，无需手动配置环境。
 
+**创建项目目录**
+
+```
+mkdir seclabx-portal
+cd seclabx-portal
+```
+
+**创建`docker-compose.yml`**
+
+```
+services:
+  portal:
+    image: crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-portal:latest
+    container_name: seclabx-portal
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"   
+    restart: always
+```
+
 **一键启动**
 
 ```
-cd seclabx-portal
 docker compose up -d
 ```
 
