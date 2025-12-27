@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <!-- 背景渐变：使用高饱和度品牌色，确保图标醒目 -->
+    <linearGradient id="seclabx_solid_gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" /> <!-- Sky-500 -->
+      <stop offset="50%" stop-color="#8b5cf6" /> <!-- Violet-500 -->
+      <stop offset="100%" stop-color="#ec4899" /> <!-- Pink-500 -->
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景：实心六边形底座 -->
+  <!-- 略微缩小范围(边界留白)，防止作为 Favicon 时被圆形遮罩裁切 -->
+  <path 
+    d="M50 8 L88 29 V71 L50 92 L12 71 V29 Z" 
+    fill="url(#seclabx_solid_gradient)" 
+    stroke="none"
+  />
+  
+  <!-- 前景：白色加粗 X，高对比度 -->
+  <path 
+    d="M38 38 L62 62 M62 38 L38 62" 
+    stroke="white" 
+    stroke-width="10" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+  />
+  
+  <!-- 节点：白色实心点，点缀在 X 的端点 -->
+  <circle cx="38" cy="38" r="4" fill="white" />
+  <circle cx="62" cy="62" r="4" fill="white" />
+  <circle cx="62" cy="38" r="4" fill="white" />
+  <circle cx="38" cy="62" r="4" fill="white" />
+</svg>
