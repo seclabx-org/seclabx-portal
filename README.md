@@ -23,7 +23,7 @@ SeclabX 安全实验室的统一门户主页。作为品牌展示、组织定位
 
 ## 🚀 快速开始 (Getting Started)
 
-确保你的环境中已安装 Node.js (推荐 v18+)。
+确保你的环境中已安装 Node.js (推荐 v22+)。
 
 ### 1. 克隆项目
 
@@ -60,22 +60,16 @@ npm run build
 
 如果你更喜欢容器化部署，可以直接使用 Docker，无需手动配置环境。
 
-**第一步：构建镜像**
+**一键启动**
 
 ```
-docker build -t seclabx-portal .
-```
-
-**第二步：启动容器**
-
-```
-# 将容器的 80 端口映射到主机的 8080 端口
-docker run -d -p 8080:80 --name seclabx-portal seclabx-portal
+cd seclabx-portal
+docker compose up -d
 ```
 
 启动后访问 `http://localhost:8080` 即可看到页面。
 
-> 详细的 Nginx 配置和 Dockerfile 说明请参考项目中的 [DEPLOY.md](https://www.google.com/search?q=./DEPLOY.md) 文档。
+> 停止容器：`docker compose down`
 
 ## 📂 项目结构
 
