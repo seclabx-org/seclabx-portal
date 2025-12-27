@@ -105,3 +105,5 @@ seclabx-portal/
   tag: 'NEW'
 }
 ```
+## 开源协议
+本项目基于 Apache License 2.0 开源发布，详情见 LICENSE 文件。![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
