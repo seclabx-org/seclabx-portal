@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
-  Shield, 
   Flag, 
   BookOpen, 
   Globe, 
@@ -60,9 +59,51 @@ const SERVICES = [
   }
 ];
 
-// --- 3D 文本球体组件 (核心视觉) ---
+// --- 3D 文本球体组件 (可交互版) ---
 const SeclabXSphere = ({ isDark }) => {
   const canvasRef = useRef(null);
+  
+  // 用于控制旋转状态的 Refs (避免触发重渲染)
+  const rotationRef = useRef({ x: 0.001, y: 0.002 }); // 当前旋转速度
+  const dragRef = useRef({ 
+    isDown: false, 
+    lastX: 0, 
+    lastY: 0 
+  });
+
+  // 处理鼠标/触摸交互
+  const handlePointerDown = (e) => {
+    // 阻止默认行为（防止手机上滚动页面）
+    // 注意：在 React 事件中 e.preventDefault 可能需要 passive: false，这里简单处理逻辑
+    
+    dragRef.current.isDown = true;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    dragRef.current.lastX = clientX;
+    dragRef.current.lastY = clientY;
+  };
+
+  const handlePointerMove = (e) => {
+    if (!dragRef.current.isDown) return;
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    const dx = clientX - dragRef.current.lastX;
+    const dy = clientY - dragRef.current.lastY;
+
+    // 更新旋转速度，负号是为了让旋转方向符合直觉（抓取效果）
+    // 灵敏度系数 0.0001
+    rotationRef.current.y = -dx * 0.0005; 
+    rotationRef.current.x = -dy * 0.0005;
+
+    dragRef.current.lastX = clientX;
+    dragRef.current.lastY = clientY;
+  };
+
+  const handlePointerUp = () => {
+    dragRef.current.isDown = false;
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -90,23 +131,33 @@ const SeclabXSphere = ({ isDark }) => {
       };
     });
 
-    let angleX = 0.001;
-    let angleY = 0.002;
-
     const draw = () => {
-      // 1. 清空画布
+      // 1. 物理计算：速度衰减与恢复
+      // 如果没有在拖拽，让速度慢慢恢复到默认的自转速度
+      if (!dragRef.current.isDown) {
+        const defaultSpeedX = 0.001;
+        const defaultSpeedY = 0.002;
+        // 线性插值 (Lerp) 平滑恢复，0.05 是恢复系数
+        rotationRef.current.x = rotationRef.current.x * 0.95 + defaultSpeedX * 0.05;
+        rotationRef.current.y = rotationRef.current.y * 0.95 + defaultSpeedY * 0.05;
+      }
+
+      const angleX = rotationRef.current.x;
+      const angleY = rotationRef.current.y;
+
+      // 2. 清空画布
       ctx.clearRect(0, 0, width, height);
       
-      // 2. 确定中心点
+      // 3. 确定中心点
       const cx = width / 2;
       const cy = height / 2;
 
-      // 3. 颜色配置 (根据主题)
+      // 4. 颜色配置 (根据主题)
       const mainColor = isDark ? 'rgba(56, 189, 248, ' : 'rgba(15, 23, 42, '; // Sky-400 or Slate-900
       const decoColor = isDark ? 'rgba(168, 85, 247, ' : 'rgba(100, 116, 139, '; // Purple-500 or Slate-500
       const lineColor = isDark ? 'rgba(56, 189, 248, 0.15)' : 'rgba(15, 23, 42, 0.05)';
 
-      // 4. 旋转与投影
+      // 5. 旋转与投影
       particles.forEach(p => {
         // 绕 Y 轴旋转
         const y1 = p.y * Math.cos(angleX) - p.z * Math.sin(angleX);
@@ -127,7 +178,7 @@ const SeclabXSphere = ({ isDark }) => {
         p.scale = scale;
       });
 
-      // 5. 绘制连接线 (模拟区块链结构)
+      // 6. 绘制连接线 (模拟区块链结构)
       ctx.beginPath();
       ctx.strokeStyle = lineColor;
       for (let i = 0; i < particles.length; i++) {
@@ -144,7 +195,7 @@ const SeclabXSphere = ({ isDark }) => {
       }
       ctx.stroke();
 
-      // 6. 绘制文本
+      // 7. 绘制文本
       // 按 Z 轴排序，先画远的，再画近的 (Painter's algorithm)
       particles.sort((a, b) => a.z - b.z);
 
@@ -192,7 +243,20 @@ const SeclabXSphere = ({ isDark }) => {
     };
   }, [isDark]);
 
-  return <canvas ref={canvasRef} className="w-full h-full" />;
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="w-full h-full cursor-grab active:cursor-grabbing touch-none" 
+      onMouseDown={handlePointerDown}
+      onMouseMove={handlePointerMove}
+      onMouseUp={handlePointerUp}
+      onMouseLeave={handlePointerUp}
+      onTouchStart={handlePointerDown}
+      onTouchMove={handlePointerMove}
+      onTouchEnd={handlePointerUp}
+      title="拖拽旋转"
+    />
+  );
 };
 
 
@@ -239,8 +303,27 @@ export default function App() {
           {/* 左侧：文字信息 */}
           <div className="text-center md:text-left md:w-1/2 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-500 text-xs font-bold tracking-wider uppercase">
-              <Shield size={12} />
-              SeclabX Laboratory X
+              
+              {/* --- 自定义图标区域 --- */}
+              {/* 如果您有本地图片文件，请取消下面这行的注释并修改路径： */}
+              <img src="/icon.svg" alt="logo" className="w-3 h-3 text-blue-500" />
+              
+              {/* 这是一个自定义的内联 SVG 图标 (带 X 的盾牌)，您可以直接在这里替换 <svg> 代码 */}
+              {/* <svg 
+                className="w-3 h-3 text-blue-500" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M9 9l6 6m-6 0l6-6" />
+              </svg> */}
+              {/* --- 图标结束 --- */}
+
+              SECURE LABORATORY X
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter">
