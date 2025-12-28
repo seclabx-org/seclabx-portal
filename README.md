@@ -75,9 +75,10 @@ services:
     image: crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-portal:latest
     container_name: seclabx-portal
     ports:
-      - "8080:80"
+      - "${HOST_IP:-0.0.0.0}:8080:80"
     environment:
       SERVER_NAME: ${SERVER_NAME:-_}
+      LISTEN_PORT: ${LISTEN_PORT:-80}
     volumes:
       - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
     restart: always
@@ -92,6 +93,17 @@ SERVER_NAME=portal.example.com
 ```
 
 启动时容器会用 `nginx.conf` 作为模板自动替换 `server_name`，无需每次手改配置文件。
+
+**可选：绑定 IP**
+
+同样在 `.env` 中可控制主机侧绑定 IP（端口固定为主机 8080 -> 容器 80，默认绑定全部网卡）：
+
+```
+HOST_IP=0.0.0.0
+LISTEN_PORT=80
+```
+
+只需改 `.env`，无需改 compose / nginx 配置文件。
 
 **一键启动**
 
