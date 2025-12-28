@@ -72,8 +72,8 @@ cd seclabx-portal
 ```
 services:
   portal:
-    image: crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-portal:latest
-    container_name: seclabx-portal
+    image: crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-web-portal:latest
+    container_name: seclabx-web-portal
     ports:
       - "${HOST_IP:-0.0.0.0}:8080:80"
     volumes:

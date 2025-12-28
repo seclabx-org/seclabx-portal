@@ -26,7 +26,7 @@ jobs:
       - name: Tag Image
         run: |
           docker tag seclabx-portal:latest \
-          crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-portal:latest
+          crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-web-portal:latest
 
       - name: Push Image
         run: |
