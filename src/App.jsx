@@ -418,8 +418,9 @@ export default function App() {
                 src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                 width="20"
                 alt="GitHub"
+                style={{ display: 'block' }}
               />
-              Open Source on GitHub
+              <span>Open Source on GitHub</span>
             </a>
           </p>
         </footer>
