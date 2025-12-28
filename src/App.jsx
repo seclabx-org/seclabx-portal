@@ -264,6 +264,8 @@ const SeclabXSphere = ({ isDark }) => {
 export default function App() {
   // 默认白色主题，true 为黑色主题
   const [darkMode, setDarkMode] = useState(false);
+  const currentYear = new Date().getFullYear();
+  const yearDisplay = currentYear > 2025 ? `2025–${currentYear}` : '2025';
 
   // 切换主题
   const toggleTheme = () => {
@@ -404,7 +406,22 @@ export default function App() {
 
         {/* 页脚 */}
         <footer className={`absolute bottom-4 w-full text-center text-xs font-mono opacity-30 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-          <p>© {new Date().getFullYear()} SeclabX. All Systems Operational.</p>
+          <p>
+            © {yearDisplay} SeclabX ·{' '}
+            <a
+              href="https://github.com/seclabx-org"
+              target="_blank"
+              rel="noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+            >
+              <img
+                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                width="20"
+                alt="GitHub"
+              />
+              Open Source on GitHub
+            </a>
+          </p>
         </footer>
 
       </main>
