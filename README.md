@@ -76,8 +76,22 @@ services:
     container_name: seclabx-portal
     ports:
       - "8080:80"
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-_}
+    volumes:
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
     restart: always
 ```
+
+**配置域名**
+
+在根目录创建 `.env`，设置需要绑定的域名（默认 `_` 表示匹配任意域名）：
+
+```
+SERVER_NAME=portal.example.com
+```
+
+启动时容器会用 `nginx.conf` 作为模板自动替换 `server_name`，无需每次手改配置文件。
 
 **一键启动**
 

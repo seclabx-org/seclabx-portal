@@ -4,4 +4,8 @@ services:
     container_name: seclabx-portal
     ports:
       - "8080:80"
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-_}
+    volumes:
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
     restart: always
