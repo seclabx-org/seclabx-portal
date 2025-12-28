@@ -406,8 +406,8 @@ export default function App() {
 
         {/* 页脚 */}
         <footer className={`absolute bottom-4 w-full text-center text-xs font-mono opacity-30 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-          <p>
-            © {yearDisplay} SeclabX ·{' '}
+          <p style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            <span>© {yearDisplay} SeclabX ·</span>
             <a
               href="https://github.com/seclabx-org"
               target="_blank"
@@ -420,7 +420,7 @@ export default function App() {
                 alt="GitHub"
                 style={{ display: 'block' }}
               />
-              <span>Open Source on GitHub</span>
+              <span style={{ lineHeight: 1 }}>Open Source on GitHub</span>
             </a>
           </p>
         </footer>
