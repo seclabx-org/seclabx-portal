@@ -76,34 +76,20 @@ services:
     container_name: seclabx-portal
     ports:
       - "${HOST_IP:-0.0.0.0}:8080:80"
-    environment:
-      SERVER_NAME: ${SERVER_NAME:-_}
-      LISTEN_PORT: ${LISTEN_PORT:-80}
     volumes:
       - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
     restart: always
 ```
 
-**配置域名**
-
-在根目录创建 `.env`，设置需要绑定的域名（默认 `_` 表示匹配任意域名）：
-
-```
-SERVER_NAME=portal.example.com
-```
-
-启动时容器会用 `nginx.conf` 作为模板自动替换 `server_name`，无需每次手改配置文件。
-
 **可选：绑定 IP**
 
-同样在 `.env` 中可控制主机侧绑定 IP（端口固定为主机 8080 -> 容器 80，默认绑定全部网卡）：
+在根目录创建 `.env`，控制主机侧绑定 IP（端口固定为主机 8080 -> 容器 80，默认绑定全部网卡）：
 
 ```
 HOST_IP=0.0.0.0
-LISTEN_PORT=80
 ```
 
-只需改 `.env`，无需改 compose / nginx 配置文件。
+域名与 HTTPS 建议在宿主机或上游反向代理（Nginx/Traefik/云 LB）配置，容器只提供静态站。
 
 **一键启动**
 
@@ -111,9 +97,10 @@ LISTEN_PORT=80
 docker compose up -d
 ```
 
-启动后访问 `http://localhost:8080` 即可看到页面。
+启动后访问`http://localhost:8080` 即可看到页面。
 
 > 停止容器：`docker compose down`
+
 
 ## 📂 项目结构
 
