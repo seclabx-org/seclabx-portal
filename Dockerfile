@@ -20,7 +20,7 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 #（可选）自定义 nginx 配置
-# COPY nginx.conf /etc/nginx/conf.d/seclabx.conf
+COPY nginx.conf /etc/nginx/conf.d/seclabx.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
