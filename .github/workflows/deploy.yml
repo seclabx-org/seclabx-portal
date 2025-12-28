@@ -21,14 +21,14 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t seclabx-portal:latest .
+          docker build -t seclabx-web-portal:latest .
 
       - name: Tag Image
         run: |
-          docker tag seclabx-portal:latest \
+          docker tag seclabx-web-portal:latest \
           crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-web-portal:latest
 
       - name: Push Image
         run: |
           docker push \
-          crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-portal:latest
+          crpi-7st94yd1uskrhjrz.cn-chengdu.personal.cr.aliyuncs.com/seclabx/seclabx-web-portal:latest
