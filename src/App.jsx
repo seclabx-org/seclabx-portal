@@ -28,14 +28,14 @@ const SERVICES = [
     tag: '竞赛平台'
   },
   {
-    id: 'sz',
-    title: '课程思政资源',
-    subtitle: '教学与伦理融合',
-    desc: '汇聚网络安全课程思政案例，构筑正确的安全伦理观。',
-    url: 'https://sz.seclabx.cn',
-    icon: BookOpen,
+    id: 'ai',
+    title: 'SeclabX AI Hub',
+    subtitle: '统一平台中枢',
+    desc: 'AI 驱动的教学、实训与安全工具统一入口。',
+    url: 'https://ai.seclabx.cn',
+    icon: Layers,
     color: 'from-blue-500 to-cyan-500',
-    tag: '教育资源'
+    tag: 'AI 中枢'
   },
   {
     id: 'science',
@@ -342,7 +342,7 @@ export default function App() {
             </h1>
             
             <p className={`text-lg md:text-xl max-w-lg mx-auto md:mx-0 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-              连接未来安全的枢纽。探索网络攻防、安全教育与前沿技术研究的综合平台。
+              连接未来安全的枢纽。构建以 AI 为核心的网络安全教学、实训与研究平台体系。
             </p>
 
             {/* (已移除装饰性数据流条) */}
